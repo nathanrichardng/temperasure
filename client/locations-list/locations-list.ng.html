@@ -1,0 +1,45 @@
+<div>
+	<h2>Locations</h2>
+	<hr>
+	<form>
+		<div class="input-group">
+		  <span class="input-group-addon" id="name">Name</span>
+		  <input type="text" class="form-control" placeholder="Name" aria-describedby="name" ng-model='vm.newLocation.name'>
+		</div>
+
+		<div class="input-group">
+		  <span class="input-group-addon" id="description">Description</span>
+		  <input type="text" class="form-control" placeholder="Description" aria-describedby="description" ng-model='vm.newLocation.description'>
+		</div>
+
+		<div class="input-group">
+		  <span class="input-group-addon" id="min">Min</span>
+		  <input type="number" step="any" class="form-control" placeholder="Min" aria-describedby="min" ng-model='vm.newLocation.min'>
+		</div>
+
+		<div class="input-group">
+		  <span class="input-group-addon" id="max">Max</span>
+		  <input type="number" step="any" class="form-control" placeholder="Max" aria-describedby="max" ng-model='vm.newLocation.max'>
+		</div>
+
+		<button ng-click="vm.add(vm.newLocation)" class='form-control btn btn-default'>Add Location</button>
+		<!--Inform user if something was entered incorrectly-->
+		<h4><span class="bg-danger">{{vm.message}}</span></h4>
+	</form>
+
+	<hr>
+	<div class="list-group" ng-repeat='location in vm.locations'>
+	  <div class="list-group-item">
+	  	<a href="/locations/{{location._id}}">
+		  	<button class="btn btn-primary pull-right">Edit</button>
+		</a>
+		<a href="/temperatures/{{location._id}}">
+			<h4 class="list-group-item-heading">{{location.name}}</h4>
+		    <p class="list-group-item-text">{{location.description}}</p>
+		    <p>Min: {{location.min}}, Max: {{location.max}}</p>
+		</a>
+	  </div>
+	  
+	</div>
+	
+</div>

@@ -1,0 +1,46 @@
+span.NO {
+	/*background-color: #EBDFBE; Change from this*/
+	background-color: #B52222;
+	color: #fff;
+}
+
+span.YES {
+	background-color: #C0EBBE;
+}
+
+input.NO {
+	box-shadow: 0px 0px 10px #B52222;
+	/*background-color: #EBDFBE; Change from this*/
+	background-color: #B52222;
+	color:#fff;
+}
+
+input.YES {
+	box-shadow: 0px 0px 10px #09B32B;
+	background-color: #C0EBBE;
+}
+
+
+
+table tr.NO {
+	background: #E8991A;
+	color: #fff;
+}
+
+table tr:last-child.YES {
+	background: #09B32B;
+	color: #fff;
+}
+
+table tr:last-child.NO {
+	background: #C22B2B;
+	color: #fff;
+}
+
+.delete {
+	cursor: pointer;
+}
+
+.delete:hover {
+	color: #C40E0E;
+}

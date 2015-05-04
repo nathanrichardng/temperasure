@@ -1,0 +1,57 @@
+<div class="col-md-12">
+	<h1>{{vm.location.name}}</h1>
+</div>
+<hr>
+
+<div class='col-md-8 col-md-push-4'>
+	<h3>Select Date Range:</h3>
+	<form>
+		<div class="input-group">
+		  	<span class="input-group-addon" id="startDate">Start</span>
+		  	<input type="date" class="form-control" placeholder="Start" aria-describedby="startDate" ng-model='vm.startDate'>
+		</div>
+		<div class="input-group">
+		  	<span class="input-group-addon" id="endDate">End</span>
+		  	<input type="date" class="form-control" placeholder="End" aria-describedby="endDate" ng-model='vm.endDate'>
+		</div>
+		<button class='form-control btn btn-primary' ng-click="vm.getDates()">Find Records</button>
+	</form>
+</div>
+
+<div class='col-md-4 col-md-pull-8'>
+	<form>
+		<h3>Record a temperature</h3>
+		<p>(<strong>Min:</strong> {{vm.location.min}}, <strong>Max:</strong> {{vm.location.max}})</p>
+		<div class="input-group">
+		  	<span class="input-group-addon" id="value">Value</span>
+		  	<input type="number" step="any" class="form-control" placeholder="Value" aria-describedby="value" ng-model='vm.newTemp.value'>
+		</div>
+		<button class='form-control btn btn-success' ng-click="vm.addTemp()">Add temp</button>
+	</form>
+</div>
+
+<div class='col-md-12'>
+	<div class='bg-warning'>
+		<h4>{{vm.message}}</h4>
+	</div>
+	<div class="table-responsive" ng-repeat="log in vm.logs">
+		<h4>{{log.createdDay.toDateString()}}</h4>
+		<div class="bg-danger">
+			<h3>{{log.message}}</h3>
+		</div>
+		<table class="table" ng-show="true">
+		    <tr>
+		    	<th>Value</th>
+		    	<th>Recorded by</th>
+		    	<th>At</th>
+		    	<th>Acceptible?</th>
+		    </tr>
+	    	<tr ng-repeat="temp in log.temps" ng-class="temp.inRange">
+		    	<td>{{temp.value}}</td>
+		    	<td>{{temp.createdBy}}</td>
+		    	<td>{{temp.createdDate.toTimeString()}}</td>
+		    	<td>{{temp.inRange}}</td>
+		    </tr>
+		</table>
+	</div>
+</div>
