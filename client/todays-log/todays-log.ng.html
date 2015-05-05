@@ -1,0 +1,12 @@
+<h4><span class="bg-danger">{{vm.message}}</span></h4>
+<div ng-repeat="log in vm.logs">
+	<div>
+		<a href="/temperatures/{{log.loc._id}}"><h4>{{log.loc.name}}</h4></a>
+		<form class="input-group">
+			<input type="number" step="any" class="form-control" placeholder="Temp" aria-describedby="Temp" ng-model="log.newestTemp.value" ng-class="log.newestTemp.inRange">
+			<span class="input-group-btn">
+				<button class='form-control btn btn-primary' ng-click="vm.addTemp(log.newestTemp.value, log.loc)">Add Temp</button>
+			</span>
+		</form>
+	</div>
+</div>

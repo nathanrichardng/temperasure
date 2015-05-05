@@ -34,9 +34,9 @@ function Config($urlRouterProvider, $stateProvider, $locationProvider) {
 function TemperaturesCtrl($stateParams, $meteor, dateService, locationService, tempService, logService) {
 	var vm = this;
 	var locID = $stateParams.locationId;
+	var loc = Locations.findOne({_id: locID});
 	vm.message = "";
 	vm.newTemp = tempService.createTemp(locID);
-	vm.dates = [];
 	vm.location = $meteor.object(Locations, locID, false);
 	vm.logs = $meteor.collection(Logs, false);
 	vm.temps = $meteor.collection(Temperatures, false);
@@ -58,8 +58,8 @@ function TemperaturesCtrl($stateParams, $meteor, dateService, locationService, t
 		if (vm.startDate > vm.endDate) {
 			vm.message = "Start date cannot be after end date."
 		}
-		vm.dates = dateService.datesBetween(vm.startDate, vm.endDate);
-		var params = {locID: locID, days: vm.dates};
+		var dates = dateService.datesBetween(vm.startDate, vm.endDate);
+		var params = {locIDs: [locID], locs: [loc], days: dates};
 		logService.subscribe(params);
 	}
 
@@ -74,11 +74,12 @@ function TemperaturesCtrl($stateParams, $meteor, dateService, locationService, t
 
 			var today = Logs.findOne({locID: locID ,createdDay: dateService.today()});
 			if (!today){
-				today = logService.createLog(locID, dateService.today());
+				today = logService.createLog(loc, dateService.today());
 			}
 
 			today.message = "";
 			today.temps.push(newTemp);
+			today.newestTemp = newTemp;
 			vm.logs.save(today);
 			vm.newTemp = tempService.createTemp(locID);
 		}

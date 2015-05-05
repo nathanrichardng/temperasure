@@ -4,7 +4,8 @@ angular.module('temperasure', [
 	'temperasure.home',
 	'temperasure.locationsList',
 	'temperasure.locationDetails',
-	'temperasure.temperatures'
+	'temperasure.temperatures',
+	'temperasure.todaysLog'
 ]).config(Config)
   .run(requireAuth);
 
