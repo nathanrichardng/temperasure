@@ -35,22 +35,28 @@ function TemperaturesCtrl($stateParams, $meteor, dateService, locationService, t
 	var vm = this;
 	var locID = $stateParams.locationId;
 	var loc = Locations.findOne({_id: locID});
-	vm.message = "";
-	vm.newTemp = tempService.createTemp(locID);
-	vm.location = $meteor.object(Locations, locID, false);
-	vm.logs = $meteor.collection(Logs, false);
-
 
 	vm.startDate = dateService.now();
 	vm.endDate = dateService.now();
+	var dates = dateService.datesBetween(vm.startDate, vm.endDate);
+
+	vm.message = "";
+	vm.newTemp = tempService.createTemp(locID);
+
 	vm.getDates = getDates;
 	vm.addTemp = addTemp;
 
 	activate();
 
 	function activate() {
-
-		getDates();
+		$meteor.subscribe("locations").then(function() {
+			vm.location = $meteor.object(Locations, locID, false);
+			getDates();
+			vm.logs = $meteor.collection(function() {
+				return Logs.find({$and: [ {"locID": locID} , {"createdDay": {$in: dates } } ]}, {sort: { "createdDay": 1 } })
+			}).subscribe("logs");
+		})
+		
 		
 	}
 
@@ -59,9 +65,12 @@ function TemperaturesCtrl($stateParams, $meteor, dateService, locationService, t
 		if (vm.startDate > vm.endDate) {
 			vm.message = "Start date cannot be after end date."
 		}
-		var dates = dateService.datesBetween(vm.startDate, vm.endDate);
 		var params = {locIDs: [locID], locs: [loc], days: dates, sort: { createdDay: 1 } };
-		logService.subscribe(params);
+		$meteor.call("addMissingDays", params);
+		dates = dateService.datesBetween(vm.startDate, vm.endDate);
+		vm.logs = $meteor.collection(function() {
+			return Logs.find({$and: [ {"locID": locID} , {"createdDay": {$in: dates } } ]}, {sort: { "createdDay": 1 } });
+		}).subscribe("logs");
 	}
 
 	function addTemp() {

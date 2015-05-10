@@ -34,7 +34,6 @@ function Config($urlRouterProvider, $stateProvider, $locationProvider) {
 function todaysLogCtrl($stateParams, $meteor, dateService, locationService, tempService, logService) {
 	var vm = this;
 	vm.message = "";
-	vm.logs = $meteor.collection(Logs, false);
 	vm.addTemp = addTemp;
 
 	activate();
@@ -43,6 +42,9 @@ function todaysLogCtrl($stateParams, $meteor, dateService, locationService, temp
 		$meteor.subscribe("locations").then(function() {
 			vm.locations = $meteor.collection(Locations);
 			getDates();
+			vm.logs = $meteor.collection(function(){
+				return Logs.find( { "createdDay": dateService.today() });
+			}, false).subscribe("logs");
 		})
 	}
 
@@ -58,8 +60,7 @@ function todaysLogCtrl($stateParams, $meteor, dateService, locationService, temp
 			console.log("triggered");
 		}
 		var params = {locIDs: locIDs, locs: locs, days: dates, sort: { "loc.name": 1 } };
-		console.log(params);
-		logService.subscribe(params);
+		$meteor.call("addMissingDays", params);
 	}
 
 	function addTemp(value, loc) {
