@@ -34,16 +34,16 @@ function Config($urlRouterProvider, $stateProvider, $locationProvider) {
 function todaysLogCtrl($stateParams, $meteor, dateService, locationService, tempService, logService) {
 	var vm = this;
 	vm.message = "";
-	vm.locations = $meteor.collection(Locations, false);
 	vm.logs = $meteor.collection(Logs, false);
 	vm.addTemp = addTemp;
 
 	activate();
 
 	function activate() {
-
-		getDates();
-		
+		$meteor.subscribe("locations").then(function() {
+			vm.locations = $meteor.collection(Locations);
+			getDates();
+		})
 	}
 
 	function getDates() {
@@ -55,8 +55,10 @@ function todaysLogCtrl($stateParams, $meteor, dateService, locationService, temp
 			var loc = vm.locations[i];
 			locs.push(loc);
 			locIDs.push(loc._id);
+			console.log("triggered");
 		}
-		var params = {locIDs: locIDs, locs: locs, days: dates};
+		var params = {locIDs: locIDs, locs: locs, days: dates, sort: { "loc.name": 1 } };
+		console.log(params);
 		logService.subscribe(params);
 	}
 

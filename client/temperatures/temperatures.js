@@ -39,7 +39,8 @@ function TemperaturesCtrl($stateParams, $meteor, dateService, locationService, t
 	vm.newTemp = tempService.createTemp(locID);
 	vm.location = $meteor.object(Locations, locID, false);
 	vm.logs = $meteor.collection(Logs, false);
-	vm.temps = $meteor.collection(Temperatures, false);
+
+
 	vm.startDate = dateService.now();
 	vm.endDate = dateService.now();
 	vm.getDates = getDates;
@@ -59,7 +60,7 @@ function TemperaturesCtrl($stateParams, $meteor, dateService, locationService, t
 			vm.message = "Start date cannot be after end date."
 		}
 		var dates = dateService.datesBetween(vm.startDate, vm.endDate);
-		var params = {locIDs: [locID], locs: [loc], days: dates};
+		var params = {locIDs: [locID], locs: [loc], days: dates, sort: { createdDay: 1 } };
 		logService.subscribe(params);
 	}
 

@@ -1,3 +1,4 @@
+//change this so that it only uses one date
 Meteor.publish("logs", function (params) {
 
 	var user = Meteor.users.findOne({_id: this.userId});
@@ -34,5 +35,5 @@ Meteor.publish("logs", function (params) {
 			{locID: {$in: params.locIDs} },
 			{createdDay: {$in: params.days } }
 		] 
-	}, { sort: { createdDay: 1 }  });
+	}, { sort: params.sort  });
 });

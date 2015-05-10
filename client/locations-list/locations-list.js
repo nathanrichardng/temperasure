@@ -35,6 +35,7 @@ function LocationsListCtrl($meteor, locationService, dateService) {
 	var vm = this;
 	vm.newLocation = locationService.createLocation();
 	vm.locations = $meteor.collection(Locations, false).subscribe('locations');
+	console.log(vm.Locations);
 	vm.add = add;
 	vm.message = null;
 
