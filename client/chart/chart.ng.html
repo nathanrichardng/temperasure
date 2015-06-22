@@ -1,0 +1,20 @@
+<div class='col-md-5'>
+	<h3>Select Date Range:</h3>
+	<form>
+		<div class="input-group">
+		  	<span class="input-group-addon" id="startDate">Start</span>
+		  	<input type="date" class="form-control" placeholder="Start" aria-describedby="startDate" ng-model='vm.startDate'>
+		</div>
+		<div class="input-group">
+		  	<span class="input-group-addon" id="endDate">End</span>
+		  	<input type="date" class="form-control" placeholder="End" aria-describedby="endDate" ng-model='vm.endDate'>
+		</div>
+		<button class='form-control btn btn-primary' ng-click="vm.getDates()">Find Records</button>
+	</form>
+</div>
+
+<div class='spacer'></div>
+
+<div class='col-md-12'>
+	<div time-chart chart-data="vm.chartData"></div>
+</div>

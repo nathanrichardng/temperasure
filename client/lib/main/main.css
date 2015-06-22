@@ -44,3 +44,34 @@ table tr:last-child.NO {
 .delete:hover {
 	color: #C40E0E;
 }
+
+path {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+ 
+line {
+    stroke: black;
+}
+ 
+text {
+    font-family: Arial;
+    font-size: 9pt;
+}
+
+#timeChart {
+  position: absolute;
+  width: auto;
+  height: 200px;
+}
+
+.footer {
+	height: 75px;
+}
+
+.spacer{
+	height: 50px;
+	width: 100%;
+	float: left;
+}

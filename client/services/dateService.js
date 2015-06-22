@@ -22,6 +22,11 @@ function dateService() {
 	function datesBetween(startDate, endDate) {
 		var end = new Date(endDate);
 		var start = new Date(startDate);
+
+		//return just the 1 date if start is same as end
+		if(start == end) {
+			return [start];
+		}
 		//do math on dates level
 		end.setHours(0,0,0,0);
 		start.setHours(0,0,0,0);

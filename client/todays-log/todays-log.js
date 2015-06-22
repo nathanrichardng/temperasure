@@ -36,6 +36,8 @@ function todaysLogCtrl($stateParams, $meteor, dateService, locationService, temp
 	vm.message = "";
 	vm.addTemp = addTemp;
 
+	vm.chartData = [['01-01-15', '01-02-15'], [1,2]];
+
 	activate();
 
 	function activate() {
@@ -45,7 +47,9 @@ function todaysLogCtrl($stateParams, $meteor, dateService, locationService, temp
 			vm.logs = $meteor.collection(function(){
 				return Logs.find( { "createdDay": dateService.today() });
 			}, false).subscribe("logs");
-		})
+		});
+
+		console.log("activated");
 	}
 
 	function getDates() {
@@ -57,13 +61,16 @@ function todaysLogCtrl($stateParams, $meteor, dateService, locationService, temp
 			var loc = vm.locations[i];
 			locs.push(loc);
 			locIDs.push(loc._id);
-			console.log("triggered");
 		}
 		var params = {locIDs: locIDs, locs: locs, days: dates, sort: { "loc.name": 1 } };
 		$meteor.call("addMissingDays", params);
 	}
 
 	function addTemp(value, loc) {
+
+		if(!tempValid(value)) {
+			return false;
+		}
 		$meteor.requireUser().then(add);
 
 		function add(user) {
@@ -83,5 +90,9 @@ function todaysLogCtrl($stateParams, $meteor, dateService, locationService, temp
 			today.newestTemp = newTemp;
 			vm.logs.save(today);
 		}
+	}
+
+	function tempValid(temp) {
+		return (angular.isNumber(temp));
 	}
 }

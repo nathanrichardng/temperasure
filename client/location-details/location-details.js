@@ -4,7 +4,7 @@ angular
 	.controller('LocationDetailsCtrl', LocationDetailsCtrl);
 
 Config.$inject = ['$urlRouterProvider', '$stateProvider', '$locationProvider'];
-LocationDetailsCtrl.$inject = ['$stateParams', '$state', '$meteor'];
+LocationDetailsCtrl.$inject = ['$stateParams', '$state', '$meteor', 'dateService'];
 
 //////////////////////////////////////////////////////////////////////////
 //         Config
@@ -74,6 +74,9 @@ function LocationDetailsCtrl($stateParams, $state, $meteor) {
 
 	function removeLocation(location) {
 		$meteor.collection(Locations).remove(location);
+		//workaround to get rid of modal error
+		var ModalOpen = angular.element( document.querySelector( '.modal-open' ) );
+		ModalOpen.removeClass('modal-open');
 		$state.go('locations');
 		//create message service to show messages like "location deleted";
 	}

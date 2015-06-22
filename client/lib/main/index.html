@@ -2,9 +2,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <base href="/">
 </head>
-<body ng-app="temperasure">
+<body>
 
-  <div>
+  <div ng-app="temperasure">
     <div class='container'>
       <!--meteor-include src="loginButtons"></meteor-include-->
       <div class="row">
@@ -26,6 +26,7 @@
                 <li><a href="/home">Home</a></li>
                 <li><a href="/locations">Locations</a></li>
                 <li><a href="/todays-log">Today's log</a></li>
+                <li><a href="/chart">Chart</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                   {{> loginButtons}} <!-- here -->
@@ -38,4 +39,10 @@
         
     </div>
   </div>
+
+  <footer class='footer'>
+    <div class='container'>
+      
+    </div>
+  </footer>
 </body>

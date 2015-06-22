@@ -1,9 +1,9 @@
 angular.module("temperasure")
 	.factory("logService", logService);
 
-logService.$inject = ['$meteor', 'tempService'];
+logService.$inject = ['$meteor', 'tempService', 'messageService'];
 
-function logService($meteor, tempService) {
+function logService($meteor, tempService, messageService) {
 
 	var subscription = false;
 
@@ -18,8 +18,9 @@ function logService($meteor, tempService) {
 		var newLog = {
 			loc: loc,
 			createdDay: day,
-			message: "",
+			messages: [],
 			temps:[],
+			newestMessage: { text: "", createdDate: null, createdBy: null},
 			newestTemp: { value: null, inRange: 'NO' }
 		}
 

@@ -34,10 +34,15 @@
 	<div class='bg-warning'>
 		<h4>{{vm.message}}</h4>
 	</div>
-	<div class="table-responsive" ng-repeat="log in vm.logs">
+	<div class="table-responsive" ng-repeat="(i, log) in vm.logs track by $index">
 		<h4>{{log.createdDay.toDateString()}}</h4>
 		<div class="bg-danger">
-			<h3>{{log.message}}</h3>
+			<h3 ng-repeat="message in log.messages">{{message.text}}</h3>
+			<form>
+				<h4>Add a comment</h4>
+				<textarea name="comment" class="form-control col-md-12" ng-model="vm.logs[i].newMessage.text"></textarea>
+				<input type="submit" class="form-control" ng-click="vm.addMessage(log.createdDay, vm.logs[i].newMessage.text)">
+			</form>
 		</div>
 		<table class="table" ng-show="true">
 		    <tr>
