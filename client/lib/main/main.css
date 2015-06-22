@@ -75,3 +75,19 @@ text {
 	width: 100%;
 	float: left;
 }
+
+.comment-header {
+	color: steelblue;
+	margin-top: 10px;
+}
+
+.comment {
+	border: 1px solid #e1e1e1;
+	padding: 20px;
+}
+
+.side-border {
+	border-left: 5px solid #e1e1e1;
+	padding-left: 10px;
+	margin-top: 10px;
+}
