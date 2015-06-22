@@ -36,14 +36,17 @@
 	</div>
 	<div class="table-responsive" ng-repeat="(i, log) in vm.logs track by $index">
 		<h4>{{log.createdDay.toDateString()}}</h4>
-		<div class="bg-danger">
-			<h3 ng-repeat="message in log.messages">{{message.text}}</h3>
-			<form>
-				<h4>Add a comment</h4>
-				<textarea name="comment" class="form-control col-md-12" ng-model="vm.logs[i].newMessage.text"></textarea>
-				<input type="submit" class="form-control" ng-click="vm.addMessage(log.createdDay, vm.logs[i].newMessage.text)">
-			</form>
+		<div class="bg-danger" ng-hide="log.temps.length > 0">
+			<h3>No Temperatures recorded for this day!</h3>
 		</div>
+
+		<p ng-repeat="message in log.messages">{{message.text}}</p>
+		<form>
+			<h4>Add a comment</h4>
+			<textarea name="comment" class="form-control col-md-12" ng-model="vm.logs[i].newMessage.text"></textarea>
+			<input type="submit" class="form-control" ng-click="vm.addMessage(log.createdDay, vm.logs[i].newMessage.text)">
+		</form>
+
 		<table class="table" ng-show="true">
 		    <tr>
 		    	<th>Value</th>

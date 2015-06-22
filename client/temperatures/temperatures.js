@@ -103,6 +103,10 @@ function TemperaturesCtrl($stateParams, $meteor, dateService, locationService, t
 	}
 
 	function addMessage(date, text) {
+
+		if (text.split("").length < 1)
+			return false;
+
 		$meteor.requireUser().then(add);
 
 		function add(user) {
