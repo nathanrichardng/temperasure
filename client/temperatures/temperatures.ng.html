@@ -34,25 +34,23 @@
 	<div class='bg-warning'>
 		<h4>{{vm.message}}</h4>
 	</div>
-	<div class="table-responsive" ng-repeat="(i, log) in vm.logs track by $index">
-		<div class="side-border">
-			<h4>{{log.createdDay.toDateString()}}</h4>
-			<div class="bg-danger" ng-hide="log.temps.length > 0">
-				<h3>No Temperatures recorded for this day!</h3>
+	<div class="side-border" ng-repeat="(i, log) in vm.logs track by $index">
+		<h4>{{log.createdDay.toDateString()}}</h4>
+		<div class="bg-danger" ng-hide="log.temps.length > 0">
+			<h3>No Temperatures recorded for this day!</h3>
+		</div>
+		<div ng-repeat="message in log.messages">
+			<div class="comment-header">{{message.createdBy}} - {{message.createdDate.toLocaleTimeString()}}</div>
+			<div class="comment">
+				{{message.text}}
 			</div>
-
-			<div ng-repeat="message in log.messages">
-				<div class="comment-header">{{message.createdBy}} - {{message.createdDate.toLocaleTimeString()}}</div>
-				<div class="comment">
-					{{message.text}}
-				</div>
-			</div>
-			<form>
-				<h4>Add a comment</h4>
-				<textarea name="comment" class="form-control col-md-12" ng-model="vm.logs[i].newMessage.text"></textarea>
-				<input type="submit" class="form-control" ng-click="vm.addMessage(log.createdDay, vm.logs[i].newMessage.text)">
-			</form>
-
+		</div>
+		<form>
+			<h4>Add a comment</h4>
+			<textarea name="comment" class="form-control col-md-12" ng-model="vm.logs[i].newMessage.text"></textarea>
+			<input type="submit" class="form-control hover-grey" ng-click="vm.addMessage(log.createdDay, vm.logs[i].newMessage.text)">
+		</form>
+		<div class="table-responsive">
 			<table class="table" ng-show="true">
 			    <tr>
 			    	<th>Value</th>
@@ -63,7 +61,7 @@
 		    	<tr ng-repeat="temp in log.temps" ng-class="temp.inRange">
 			    	<td>{{temp.value}}</td>
 			    	<td>{{temp.createdBy}}</td>
-			    	<td>{{temp.createdDate.toTimeString()}}</td>
+			    	<td>{{temp.createdDate.toLocaleTimeString()}}</td>
 			    	<td>{{temp.inRange}}</td>
 			    </tr>
 			</table>
