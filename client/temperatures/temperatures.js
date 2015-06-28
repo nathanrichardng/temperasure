@@ -70,7 +70,7 @@ function TemperaturesCtrl($stateParams, $meteor, dateService, locationService, t
 		$meteor.call("addMissingDays", params).then(function() {
 			vm.logs = $meteor.collection(function() {
 				return Logs.find({$and: [ {"locID": locID} , {"createdDay": {$in: dates } } ]}, {sort: { "createdDay": 1 } });
-			}).subscribe("logs");
+			}, false).subscribe("logs");
 		});
 		
 	}

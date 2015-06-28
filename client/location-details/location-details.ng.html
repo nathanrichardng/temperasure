@@ -34,6 +34,7 @@
 			<div ng-click="vm.reset()" class='btn btn-default col-xs-6'>Reset form</div>
 
 			<button ng-click="vm.save()" class='form-control btn btn-info'>Save</button>
+			<div class="bg-danger">{{vm.message}}</div>
 			
 		</form>
 	</div>
@@ -50,7 +51,7 @@
 		</form>
 		<ul class="list-group">
 			<li class="list-group-item" ng-repeat="email in vm.location.users" >
-			    {{email}}
+			    {{email}}<span class="pull-right delete glyphicon glyphicon-remove" ng-click="vm.removeUser(email)"></span>
 			</li>
 		</ul>
 	</div>

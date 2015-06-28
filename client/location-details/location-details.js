@@ -36,12 +36,14 @@ function Config($urlRouterProvider, $stateProvider, $locationProvider) {
 function LocationDetailsCtrl($stateParams, $state, $meteor) {
 	var vm = this;
 
+	vm.message = "";
 	vm.newUser = null;
 	vm.location = $meteor.object(Locations, $stateParams.locationId, false);
 	
 	vm.save = save;
 	vm.reset = reset;
 	vm.addUser = addUser;
+	vm.removeUser = removeUser;
 	vm.removeLocation = removeLocation;
 
 	activate();
@@ -57,6 +59,7 @@ function LocationDetailsCtrl($stateParams, $state, $meteor) {
 
 		function success(numberOfDocs) {
 			console.log('save success doc affected ', numberOfDocs);
+			vm.message = "Saved changes."
 		}
 		function error(error) {
 			console.log('save error', error);
@@ -69,6 +72,14 @@ function LocationDetailsCtrl($stateParams, $state, $meteor) {
 
 	function addUser(email) {
 		vm.location.users.push(email);
+		vm.location.save();
+		vm.newUser = "";
+	}
+
+	function removeUser(email) {
+		var index = vm.location.users.indexOf(email);
+		console.log(email);
+		vm.location.users.splice(index, 1);
 		vm.location.save();
 	}
 

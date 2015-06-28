@@ -35,9 +35,9 @@
 		<h4>{{vm.message}}</h4>
 	</div>
 	<div class="side-border" ng-repeat="(i, log) in vm.logs track by $index">
-		<h4>{{log.createdDay.toDateString()}}</h4>
+		<h3>{{log.createdDay.toDateString()}}</h3>
 		<div class="bg-danger" ng-hide="log.temps.length > 0">
-			<h3>No Temperatures recorded for this day!</h3>
+			<h4>No Temperatures recorded for this day!</h4>
 		</div>
 		<div ng-repeat="message in log.messages">
 			<div class="comment-header">{{message.createdBy}} - {{message.createdDate.toLocaleTimeString()}}</div>
