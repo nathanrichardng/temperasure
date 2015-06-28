@@ -9,14 +9,12 @@
 		  	<span class="input-group-addon" id="endDate">End</span>
 		  	<input type="date" class="form-control" placeholder="End" aria-describedby="endDate" ng-model='vm.endDate'>
 		</div>
-		<button type="button" class="btn col-md-6" ng-click="vm.chartType = 'First Recording'" ng-class="vm.highlightIfChartTypeIs('First Recording')">First Recording</button>
-		<button type="button" class="btn col-md-6" ng-click="vm.chartType = 'Last Recording'" ng-class="vm.highlightIfChartTypeIs('Last Recording')">Last Recording</button>
-		<input type="submit" class='form-control btn btn-primary' ng-click="vm.getDates()" value="Find Records">
+		<button class='form-control btn btn-primary' ng-click="vm.getDates()">Find Records</button>
 	</form>
 </div>
 
 <div class='spacer'></div>
 
 <div class='col-md-12'>
-	<div time-chart chart-data="vm.chartData"></div>
+	<div time-chart chart-data="vm.gridData"></div>
 </div>

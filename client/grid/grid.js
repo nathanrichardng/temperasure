@@ -1,10 +1,10 @@
 angular
-	.module('temperasure.chart', ['angular-meteor', 'ui.router'])
+	.module('temperasure.grid', ['angular-meteor', 'ui.router'])
 	.config(Config)
-	.controller('chartCtrl', chartCtrl);
+	.controller('gridCtrl', gridCtrl);
 
 Config.$inject = ['$urlRouterProvider', '$stateProvider', '$locationProvider'];
-chartCtrl.$inject = ['$stateParams', '$meteor', 'dateService', 'locationService', 'tempService', 'logService'];
+gridCtrl.$inject = ['$stateParams', '$meteor', 'dateService', 'locationService', 'tempService', 'logService'];
 
 //////////////////////////////////////////////////////////////////////////
 //         Config
@@ -13,10 +13,10 @@ chartCtrl.$inject = ['$stateParams', '$meteor', 'dateService', 'locationService'
 function Config($urlRouterProvider, $stateProvider, $locationProvider) {
 
 	$stateProvider
-		.state('chart', {
-			url: '/chart',
-			templateUrl: 'client/chart/chart.ng.html',
-			controller: 'chartCtrl',
+		.state('grid', {
+			url: '/grid',
+			templateUrl: 'client/grid/grid.ng.html',
+			controller: 'gridCtrl',
 			controllerAs: 'vm',
 			resolve: {
 				'currentUser': ['$meteor', function($meteor) {
@@ -31,16 +31,13 @@ function Config($urlRouterProvider, $stateProvider, $locationProvider) {
 //             CONTROLLER
 //////////////////////////////////////////////////////////////////////////
 
-function chartCtrl($stateParams, $meteor, dateService, locationService, tempService, logService) {
+function gridCtrl($stateParams, $meteor, dateService, locationService, tempService, logService) {
 	var vm = this;
 	vm.message = "";
 	vm.startDate = dateService.today();
 	vm.endDate = dateService.today();
-	vm.chartType = "Last Recording";
-	vm.chartData = [];
-
 	vm.getDates = getDates;
-	vm.highlightIfChartTypeIs = highlightIfChartTypeIs;
+	vm.gridData = [];
 
 	activate();
 
@@ -50,20 +47,11 @@ function chartCtrl($stateParams, $meteor, dateService, locationService, tempServ
 
 	function getDates() {
 		var dateArray = dateService.datesBetween(vm.startDate, vm.endDate);
-		var chartMethod;
-		if (vm.chartType == "Last Recording")
-			chartMethod = 'getLastChartData';
-		else if (vm.chartType == "First Recording")
-			chartMethod = 'getFirstChartData';
-
-		$meteor.call(chartMethod, dateArray).then(function(data) {
+		$meteor.call('getGridData', dateArray).then(function(data) {
 			console.log(data);
-			vm.chartData = data;
-			console.log(vm.chartData);
+			vm.gridData = data;
+			console.log(vm.gridData);
 		})
 	}
-
-	function highlightIfChartTypeIs(type) {
-		return vm.chartType == type ? 'btn-info' : 'btn-default';
-	}
+	
 }

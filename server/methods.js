@@ -24,7 +24,7 @@ Meteor.methods({
 	},
 
 	//change this to work on the client side instead
-	getChartData: function(dayArray) {
+	getLastChartData: function(dayArray) {
 
 		//need to refactor and figure out why todays-log not updating when loc deleted
 
@@ -82,6 +82,72 @@ Meteor.methods({
 				var newestTemp = log.newestTemp.value;
 
 				locArray.push(newestTemp);
+			}
+			return locArray;
+		}
+	},
+
+	getFirstChartData: function(dayArray) {
+
+		//need to refactor and figure out why todays-log not updating when loc deleted
+
+		var user = Meteor.users.findOne({_id: this.userId});
+
+		if(!user) {
+			return false;
+		}
+
+		var email = user.emails[0].address;
+
+		var locations = Locations.find({
+		    $or:[
+		      {$and:[
+		        {owner: this.userId},
+		        {owner: {$exists: true}}
+		      ]},
+		      {$and:[
+		        {users: email},
+		        {users: {$exists: true}}
+		      ]}
+		    ]}).fetch();
+
+		var chartData = [];
+		var x = ['x'];
+		//fill x with all the dates
+		for (var i=0; i<dayArray.length; i++) {
+			x.push(dayArray[i]);
+		}
+		//add x to chartData
+		chartData.push(x);
+		//fill each location, then insert it into chartData
+
+		for (var j=0; j<locations.length; j++) {
+			var location = locations[j];
+			var locTemps = addLocFirstTemps(location);
+			chartData.push(locTemps);
+		}
+
+		return chartData;
+
+		function addLocFirstTemps(loc) {
+			var locArray = [];
+			locArray.push(loc.name);
+			var locID = loc._id;
+			for(var k=0; k<dayArray.length; k++) {
+				var day = dayArray[k];
+				var log = Logs.findOne({"locID": locID, "createdDay": day});
+				if (!log) {
+					log = {temps: []};
+				}
+				var firstTemp;
+				if (log.temps.length == 0) {
+					firstTemp = null;
+				}
+				else {
+					firstTemp = log.temps[0].value;
+				}
+
+				locArray.push(firstTemp);
 			}
 			return locArray;
 		}

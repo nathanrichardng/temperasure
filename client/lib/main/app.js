@@ -6,6 +6,7 @@ angular.module('temperasure', [
 	'temperasure.locationDetails',
 	'temperasure.temperatures',
 	'temperasure.todaysLog',
+	'temperasure.grid',
 	'temperasure.chart'
 ]).config(Config)
   .run(requireAuth);
