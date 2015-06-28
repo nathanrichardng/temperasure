@@ -16,7 +16,8 @@ Meteor.methods({
 						loc: loc, 
 						createdDay: day,
 						temps: [],
-						messages: []
+						messages: [],
+						removed: false
 					});
 				}
 			}

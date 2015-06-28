@@ -45,7 +45,7 @@ function todaysLogCtrl($stateParams, $meteor, dateService, locationService, temp
 			vm.locations = $meteor.collection(Locations);
 			getDates();
 			vm.logs = $meteor.collection(function(){
-				return Logs.find( { "createdDay": dateService.today() });
+				return Logs.find( { "createdDay": dateService.today(), removed: {$ne: true} });
 			}, false).subscribe("logs");
 		});
 
@@ -90,6 +90,8 @@ function todaysLogCtrl($stateParams, $meteor, dateService, locationService, temp
 			today.newestTemp = newTemp;
 			vm.logs.save(today);
 		}
+
+		console.log(vm.logs);
 	}
 
 	function tempValid(temp) {

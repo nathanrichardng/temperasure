@@ -21,7 +21,8 @@ function logService($meteor, tempService, messageService) {
 			messages: [],
 			temps:[],
 			newestMessage: { text: "", createdDate: null, createdBy: null},
-			newestTemp: { value: null, inRange: 'NO' }
+			newestTemp: { value: null, inRange: 'NO' },
+			removed: false
 		}
 
 		return newLog;
