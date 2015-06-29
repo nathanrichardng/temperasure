@@ -21,17 +21,17 @@ Locations.allow({
 Locations.after.update(function(userId, doc) {
   if (doc.name != this.previous.name) {
     var logs = Logs.find({locID: doc._id}).fetch();
-    for(i=0; i<logs.length; i++) {
+    for(var i=0; i<logs.length; i++) {
       var log = logs[i];
-      Logs.update({_id: log._id }, {loc: doc});
+      Logs.update({_id: log._id }, { $set: {loc: doc} });
     }
   }
 });
 
 Locations.after.remove(function(userId, doc) {
   var logs = Logs.find({locID: doc._id}).fetch();
-  for(i=0; i<logs.length; i++) {
+  for(var i=0; i<logs.length; i++) {
     var log = logs[i];
-    Logs.update({_id: log._id }, {removed: true});
+    Logs.update({_id: log._id }, { $set: { removed: true} });
   }
 })

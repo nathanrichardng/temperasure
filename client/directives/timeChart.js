@@ -27,7 +27,7 @@ function timeChart() {
                             }
                         },
                         y: {
-                            inner: true,
+                            inner: false,
                             tick: {
                                 format: function(d) {
                                     return Math.round(d*100)/100;

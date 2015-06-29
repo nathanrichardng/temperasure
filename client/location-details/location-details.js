@@ -39,6 +39,7 @@ function LocationDetailsCtrl($stateParams, $state, $meteor) {
 	vm.message = "";
 	vm.newUser = null;
 	vm.location = $meteor.object(Locations, $stateParams.locationId, false);
+	console.log(vm.location);
 	
 	vm.save = save;
 	vm.reset = reset;
@@ -60,6 +61,7 @@ function LocationDetailsCtrl($stateParams, $state, $meteor) {
 		function success(numberOfDocs) {
 			console.log('save success doc affected ', numberOfDocs);
 			vm.message = "Saved changes."
+			console.log(vm.location);
 		}
 		function error(error) {
 			console.log('save error', error);

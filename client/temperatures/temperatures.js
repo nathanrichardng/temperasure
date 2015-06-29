@@ -122,8 +122,8 @@ function TemperaturesCtrl($stateParams, $meteor, dateService, locationService, t
 			}
 
 			//reset the value of our input box
-			today.newMessage.text = "";
-			console.log(today);
+			/*today.newMessage.text = "";
+			console.log(today);*/
 
 			today.messages.push(newMessage);
 			today.newestMessage = newMessage;
